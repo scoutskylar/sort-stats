@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- adapted from http://www.ltcconline.net/greenl/java/Statistics/catStatProb/categorizingStatProblemsJavaScript.html -->
+<html>
+	<head>
+		<title>Categorizing Statistics Problems</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="assets/android-chrome-192x192.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+		<link rel="icon" href="favicon.ico">
+		<meta name="theme-color" content="#e4e4e4">
+		<script src="assets/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/questions.js" defer></script>
+		<script type="text/javascript" src="assets/explanations.js" defer></script>
+		<script type="text/javascript" src="assets/script.js" defer></script>
+		<link rel="stylesheet" href="assets/style.css">
+	</head>
+
+	<body>
+		<div id="infoDiv">
+			<h1 style="margin-top: 0.1em; margin-bottom: 0;">
+				Instructions
+			</h1>
+			<p style="margin-top: 0; margin-bottom: 0.5em; opacity: 0.8;">
+				Categorizing Statistics Problems
+			</p>
+			<div>
+				On this webpage, you can practice identifying situations
+				where various hypothesis tests and confidence intervals are used.
+				Press begin to select the items that would like to
+				practice identifying. You will be presented with a
+				statistics problem, and your goal is to identify
+				what inference procedure would be used in the situation
+				presented.
+			</div>
+			<p style="font-style: italic; font-size: 0.8em;">
+				This program was adapted by Skylar Smith, an AP Statistics student
+				at Fishers High School. This program is originally from a
+				<a href="http://www.ltcconline.net/greenl/java/Statistics/catStatProb/categorizingStatProblemsJavaScript.html" target="_blank">
+					webpage<!--
+			 --></a>
+				by Larry Green, a member of the faculty of Lake Tahoe
+				Community College.
+			</p>
+			<div style="margin-block: 0.5em;">
+				<input type="button" value="Begin" onclick="endInstructions()">
+			</div>
+		</div>
+
+		<div id="categorySelectionDiv" style="display: none;">
+			<h1 style="margin-top: 0.1em; margin-bottom: 0;">
+				Select Categories
+			</h1>
+			<p style="margin-top: 0; margin-bottom: 0.5em; opacity: 0.8;">
+				Choose the categories that you want to practice identifying.
+			</p>
+			<label>
+				<input type="checkbox" checked>
+				Confidence interval for a population mean
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Confidence interval for a population proportion
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Confidence interval for the difference between two population means
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Confidence interval for paired data
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Confidence interval for the difference between two population proportions
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Hypothesis test for a population mean
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Hypothesis test for a population proportion
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Hypothesis test for the difference between two population means
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Hypothesis test for paired data
+			</label>
+			<label>
+				<input type="checkbox" checked>
+				Hypothesis test for the difference between two population proportions
+			</label>
+			<label>
+				<input type="checkbox">
+				Prediction interval for y for a single value of x
+			</label>
+			<label>
+				<input type="checkbox">
+				Chi-square test for goodness of fit
+			</label>
+			<label>
+				<input type="checkbox">
+				Chi-square test for independence
+			</label>
+			<label>
+				<input type="checkbox">
+				Chi-square test for homogeneity
+			</label>
+			<label>
+				<input type="checkbox">
+				One-way analysis of variance test
+			</label>
+			<div style="margin-block: 0.5em;">
+				<input type="button" value="Select All" onclick="$('#categorySelectionDiv > label > input').each(function() { this.checked = !this.disabled; })">
+				<input type="button" value="Select None" onclick="$('#categorySelectionDiv > label > input').prop('checked', false)">
+				<input type="button" value="Start" onclick="start()">
+			</div>
+			<p id="selectTwoOptionsMsg" style="margin-top: 0.5em; margin-bottom: 0.5em; opacity: 0.8; color: #b30000; font-weight: bold; display: none;">
+				You must select at least two options.
+			</p>
+		</div>
+
+		<div id="practiceDiv" style="display: none;">
+			<h1 style="margin-top: 0.1em; margin-bottom: 0.1em;">
+				Practice
+			</h1>
+			<div id="questionBox" style="border: 2px solid; padding: 1em;">
+				If you have enough time to read this message,
+				this program probably won't work. Try using
+				<a href="http://www.ltcconline.net/greenl/java/Statistics/catStatProb/categorizingStatProblemsJavaScript.html" target="_blank">
+					the original<!--
+			 --></a>. It might work with your browser.
+			</div>
+			<p style="margin-top: 0.5em; margin-bottom: 0.5em;">
+				Which of the following is the most appropriate inference procedure for the above problem?
+			</p>
+			<div id="answerChoices"></div>
+			<div id="explanationDiv" class="info-box">
+				Choose an option above.
+			</div>
+			<div id="nextQuestionButton" style="margin-block: 0.5em; display: none;">
+				<input type="button" value="Next Question" onclick="processNextQuestion()">
+			</div>
+		</div>
+		
+		<div id="foot" style="position: fixed; bottom: 0; padding: 0.7em; border-top: 2px solid; margin: 0 auto; left: 0; right: 0; box-sizing: border-box; background: inherit;">
+			Originally from
+			<a href="http://www.ltcconline.net/greenl/java/Statistics/catStatProb/categorizingStatProblemsJavaScript.html" target="_blank">
+				this webpage<!--
+		 --></a>
+		 by Larry Green. Adapted by Skylar Smith.
+		</div>
+	</body>
+</html>
